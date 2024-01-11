@@ -3,6 +3,8 @@ pub mod event;
 pub mod ui;
 pub mod tui;
 pub mod update;
+pub mod component;
+pub mod settings;
 
 use config::Config;
 use std::collections::HashMap;
@@ -15,6 +17,7 @@ use event::{Event, EventHandler};
 use app::App;
 use tui::Tui;
 use update::update;
+use settings::Settings;
 
 fn main() -> Result<()> {
     // Set up colourful error reporting :)
@@ -27,7 +30,11 @@ fn main() -> Result<()> {
         .unwrap();
 
     let s: HashMap<String, String> = settings.try_deserialize().unwrap();
-    println!("{:?}", s);
+    println!("{:?}", &s);
+    let stng = Settings {
+        parent_directory: String::from(&s[0]),
+    };
+    println!("{:?}", stng.parent_directory);
 
     // Create the application.
     let mut app = App::new();
